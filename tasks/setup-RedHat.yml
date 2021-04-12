@@ -19,6 +19,22 @@
       name: dnf-plugins-core
       state: present
 
+  - name: check if CentOS 8 PowerTools repo enabled
+    shell: dnf -y config-manager --set-enabled PowerTools
+    args:
+      warn: no
+    register: check_repo
+    failed_when: check_repo.rc == "0"
+    changed_when: false
+
+  - name: Fix | Check if CentOS 8 powertools repo enabled
+    shell: dnf -y config-manager --set-enabled powertools
+    args:
+      warn: no
+    register: check_repo
+    failed_when: check_repo.rc == "0"
+    changed_when: false
+
   - name: Enable DNF module for CentOS 8+.
     shell: |
       dnf config-manager --set-enabled powertools
